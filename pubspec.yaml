@@ -1,0 +1,23 @@
+name: amuse_flutter
+description: Amuse_test flutter app by Kim Min Ho.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^3.1.0
+  equatable: ^1.0.1
+  http: ^0.12.0+3
+  cupertino_icons: ^0.1.2
+  shared_preferences: ^0.5.6
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
