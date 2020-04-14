@@ -44,12 +44,15 @@ class CertificationBloc extends Bloc<CertificationEvent, CertificationState> {
       String email, String password) async* {
     try {
       String body = json.encode({"email": email, "password": password});
+      print("$body");
       final response =
           await _authenticationBloc.postWithoutAuth('/api/login', body);
 
       if (response['data'] != null) {
         final UserRepository _userRepository = UserRepository();
         _userRepository.persistUsername(response['data']['name']);
+        print("name : ${response['data']['name']}");
+        print("token: ${response['meta']['token']}");
         yield CertificationState.checkSuccess();
       } else {
         yield CertificationState.success();

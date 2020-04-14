@@ -30,7 +30,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return MaterialApp(
       home: Scaffold(
-        body: Center(),
+        body: Center(
+          child: Text("${_userRepository.getEmail()}"),
+        ),
       ),
     );
   }

@@ -11,7 +11,7 @@ class AuthenticationBloc
   final UserRepository _userRepository;
   final http.Client _httpClient;
 
-  final String apiUrl = "http://dev.amusetravel.com/api/login";
+  final String apiUrl = "http://dev.amusetravel.com";
 
   AuthenticationBloc({
     @required UserRepository userRepository,
@@ -32,8 +32,6 @@ class AuthenticationBloc
       yield* _mapAppStartedToState();
     } else if (event is LoggedIn) {
       yield* _mapLoggedInToState();
-    } else if (event is LoggedOut) {
-      yield* _mapLoggedOutToState();
     }
   }
 
@@ -43,8 +41,6 @@ class AuthenticationBloc
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
         final name = await _userRepository.getUser();
-        String accessToken = await _userRepository.getAccessToken();
-
         yield Authenticated(name);
       } else {
         yield Unauthenticated();
@@ -54,44 +50,10 @@ class AuthenticationBloc
     }
   }
 
-
-  Future<dynamic> getMemberCode(String url) async {
-    String accessToken = await _userRepository.getAccessToken();
-
-    if (accessToken != null) {
-      final response = await _httpClient.get(apiUrl + url, headers: {
-        'Content-Type': 'application/json',
-        "Authorization": accessToken
-      });
-
-      if (response.statusCode == 200 || response.statusCode == 500) {
-        if (response.body != null) {
-          String memberCode = json.decode(utf8.decode(response.bodyBytes))['memberCode'];
-
-          return json.decode(utf8.decode(response.bodyBytes));
-        } else {
-          return null;
-        }
-      } else if (response.statusCode == 401) {
-        this.add(LoggedOut());
-      } else if (response.statusCode == 404) {
-        return null;
-      } else {
-        throw Exception('Error fetching get');
-      }
-    } else {
-      this.add(LoggedOut());
-    }
-  }
-
   Stream<AuthenticationState> _mapLoggedInToState() async* {
     yield Authenticated(await _userRepository.getUser());
   }
 
-  Stream<AuthenticationState> _mapLoggedOutToState() async* {
-    yield Unauthenticated();
-    _userRepository.signOut();
-  }
 
   Map<String, dynamic> parseJwt(String token) {
     String tokenBody = token.replaceAll("Bearer ", '');
@@ -255,7 +217,6 @@ class AuthenticationBloc
 
     Map<String, dynamic> jsonBody =
         json.decode(utf8.decode(response.bodyBytes));
-    print(']-------] postWithoutAuth : body [-------[ ${response}');
 
     if (response.statusCode == 200 || response.statusCode == 500) {
       await _userRepository.persistToken(jsonBody['accessToken']);

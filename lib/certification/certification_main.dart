@@ -15,7 +15,9 @@ class CertificationMain extends StatefulWidget {
 
 class _CertificationMainState extends State<CertificationMain> {
   CertificationBloc _certificationBloc;
-  final _codeController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   UserRepository _userRepository = UserRepository();
 
   @override
@@ -27,7 +29,8 @@ class _CertificationMainState extends State<CertificationMain> {
   _onInputCodeButtonPressed() {
     BlocProvider.of<CertificationBloc>(context).add(
       InputDataCodeButtonPressed(
-        email: _codeController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
       ),
     );
   }
@@ -71,20 +74,27 @@ class _CertificationMainState extends State<CertificationMain> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-                          Image(
-                            image: AssetImage('assets/images/welcome_image.png'),
-                          ),
+
                           TextFormField(
-                            controller: _codeController,
+                            controller: _emailController,
                             decoration: InputDecoration(
-                              labelText: '로그인',
+                              labelText: '이메일',
                             ),
                             validator: (value) {
                               if (value.isEmpty ) {
-                                return '아이디와 비밀번호를 입력해 주세요.';
-                              } else if(value.length != 4){
-                                return '아이디 혹은 비밀번호가 틀렸습니다.';
-                              }else
+                                return '이메일을 입력해 주세요.';
+                              } else
+                                return null;
+                            },
+                          ),TextFormField(
+                            controller: _passwordController,
+                            decoration: InputDecoration(
+                              labelText: '비밀번호',
+                            ),
+                            validator: (value) {
+                              if (value.isEmpty ) {
+                                return '비밀번호를 입력해 주세요.';
+                              } else
                                 return null;
                             },
                           ),
@@ -94,8 +104,8 @@ class _CertificationMainState extends State<CertificationMain> {
                         width: 1000.0,
                         height: 45.0,
                         child: RaisedButton(
-                          textColor: Colors.orange,
-                          color: Colors.white,
+                          textColor: Colors.white,
+                          color: Colors.redAccent,
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               if (state is! InputDataLoading) {
