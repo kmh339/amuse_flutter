@@ -1,4 +1,5 @@
 import 'package:amuse_flutter/authentication/authentication_bloc.dart';
+import 'package:amuse_flutter/certification/certification.dart';
 import 'package:amuse_flutter/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,7 +28,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-
+        builder: (context, state) {
+          return CertificationScreen();
+        },
       )
     );
   }
