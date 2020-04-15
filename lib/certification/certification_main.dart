@@ -79,7 +79,7 @@ class _CertificationMainState extends State<CertificationMain> {
                 padding: const EdgeInsets.only(right:30.0,left: 30.0,top: 30.0,bottom: 50.0),
                 child: SafeArea(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Column(
                         children: <Widget>[
@@ -99,7 +99,9 @@ class _CertificationMainState extends State<CertificationMain> {
                             controller: _passwordController,
                             decoration: InputDecoration(
                               labelText: '비밀번호',
+
                             ),
+                            obscureText: true,
                             validator: (value) {
                               if (value.isEmpty ) {
                                 return '비밀번호를 입력해 주세요.';
