@@ -51,17 +51,11 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if(state is Unauthenticated) {
-              print("sign in : $_signIn");
               return CertificationScreen();
-
           }
           else if(state is Authenticated){
-            print("sign in : $_signIn");
-
             return ProductScreen(userName: userName, token: token,);
           }
-          print("sign in : $_signIn");
-
           return SplashScreen();
         },
       )

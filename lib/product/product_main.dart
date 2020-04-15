@@ -53,13 +53,20 @@ class _ProductMainState extends State<ProductMain> {
             _product = state.product;
             return Scaffold(
               body: Padding(
-                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                padding: EdgeInsets.only(top: 40, left: 20, right: 20),
                 child: Container(
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text("닉네임 : ${_userName}"),
+                    Text(
+                      "사용자 이름 : ${_userName}",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     Text("토큰 : ${_token}"),
+                    Padding(padding: EdgeInsets.only(bottom: 10),),
                     Expanded(
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,
@@ -73,7 +80,7 @@ class _ProductMainState extends State<ProductMain> {
                                   padding: EdgeInsets.all(10),
                                   child: Container(
                                     width: 300,
-                                    height: 140,
+                                    height: 100,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -112,8 +119,7 @@ class _ProductMainState extends State<ProductMain> {
             return Center(
               child: CircularProgressIndicator(
                 backgroundColor: Colors.white,
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(Colors.lightGreenAccent),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
               ),
             );
           }
