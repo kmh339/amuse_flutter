@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/model/user_meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -48,14 +50,13 @@ class CertificationBloc extends Bloc<CertificationEvent, CertificationState> {
       final response =
           await _authenticationBloc.postWithoutAuth('/api/login', body);
 
-      if (response['data'] != null) {
-        final UserRepository _userRepository = UserRepository();
-        _userRepository.persistUsername(response['data']['name']);
-        print("name : ${response['data']['name']}");
-        print("token: ${response['meta']['token']}");
-        yield CertificationState.checkSuccess();
-      } else {
-        yield CertificationState.success();
+      if (response['data'] != null && response['meta'] != null) {
+       User user = User.fromJson(response['data']);
+       UserMeta userMeta = UserMeta.fromJson(response['meta']);
+
+        print("name : ${user.name}");
+        print("token: ${userMeta.token}");
+        yield CertificationState.success(user: user, userMeta: userMeta);
       }
     } catch (error) {
       yield CertificationState.failure();
