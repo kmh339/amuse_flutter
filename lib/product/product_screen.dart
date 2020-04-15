@@ -8,19 +8,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 class ProductScreen extends StatefulWidget {
+  final String _userName;
+  final String _token;
+
+  ProductScreen({
+   Key key,
+   @required String userName,
+    @required String token,
+}) : assert(userName != null),
+  _userName = userName,
+  assert(token != null),
+  _token =token,
+  super(key: key);
+
   @override
   _ProductScreenState createState() => _ProductScreenState();
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  AuthenticationBloc _authenticationBloc;
-  UserRepository _userRepository = UserRepository();
+  String get _userName => widget._userName;
+  String get _token => widget._token;
 
   @override
   void initState() {
     super.initState();
 
-    _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
 
   }
 
@@ -31,7 +43,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Text("${_userRepository.getEmail()}"),
+          child: Text("${_userName}"),
         ),
       ),
     );

@@ -18,6 +18,9 @@ class _CertificationMainState extends State<CertificationMain> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  String userName;
+  String token;
+
   UserRepository _userRepository = UserRepository();
 
   @override
@@ -27,6 +30,7 @@ class _CertificationMainState extends State<CertificationMain> {
   }
 
   _onInputCodeButtonPressed() {
+
     BlocProvider.of<CertificationBloc>(context).add(
       InputDataCodeButtonPressed(
         email: _emailController.text,
@@ -44,8 +48,13 @@ class _CertificationMainState extends State<CertificationMain> {
         setState(() {
           if (state.isLoaded ) {
             if (state.isCheckStatus) {
+              _userRepository.persistUsername(state.user.name);
+              _userRepository.persistToken(state.userMeta.token);
+              userName = state.user.name;
+              token = state.userMeta.token;
+              print("name : $userName, token : $token");
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-                return ProductScreen();
+                return ProductScreen(userName: userName, token: token,);
               }));
             }
           }

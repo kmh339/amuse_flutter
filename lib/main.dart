@@ -25,12 +25,22 @@ void main() {
 
 class MyApp extends StatelessWidget {
   bool _signIn;
+  String userName;
+  String token;
 
   @override
   Widget build(BuildContext context) {
     final UserRepository _userRepository = UserRepository();
     _userRepository.isSignedIn().then((signIn) {
       this._signIn = signIn;
+    });
+
+    _userRepository.getUser().then((userName){
+      this.userName = userName;
+    });
+
+    _userRepository.getAccessToken().then((token) {
+      this.token = token;
     });
 
     return MaterialApp(
@@ -48,7 +58,7 @@ class MyApp extends StatelessWidget {
           else if(state is Authenticated){
             print("sign in : $_signIn");
 
-            return ProductScreen();
+            return ProductScreen(userName: userName, token: token,);
           }
           print("sign in : $_signIn");
 
