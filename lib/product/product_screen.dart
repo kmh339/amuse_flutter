@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amuse_flutter/authentication/bloc.dart';
+import 'package:amuse_flutter/product/bloc/bloc.dart';
+import 'package:amuse_flutter/product/product_main.dart';
 import 'package:amuse_flutter/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,23 +31,17 @@ class _ProductScreenState extends State<ProductScreen> {
   String get _userName => widget._userName;
   String get _token => widget._token;
 
-  @override
-  void initState() {
-    super.initState();
-
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
+    return  Scaffold(
+        body: BlocProvider<ProductBloc>(
+          create: (context) => ProductBloc(
+            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
+          ),
+          child: ProductMain(userName: _userName, token: _token,),
+        )
+      );
 
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text("${_userName}"),
-        ),
-      ),
-    );
   }
 }

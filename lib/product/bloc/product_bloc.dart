@@ -6,7 +6,6 @@ import 'package:amuse_flutter/product/bloc/bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:amuse_flutter/model/models.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:http/http.dart' as http;
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final AuthenticationBloc _authenticationBloc;
@@ -35,11 +34,11 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   @override
   Stream<ProductState> mapEventToState(ProductEvent event) async* {
     if (event is ProductLoad) {
-      yield* _mapProductLoadToState(event.id);
+      yield* _mapProductLoadToState();
     }
   }
 
-  Stream<ProductState> _mapProductLoadToState(int id) async* {
+  Stream<ProductState> _mapProductLoadToState() async* {
     try {
       print("]-----] _mapProductLoadToState try [-----[");
 
@@ -53,8 +52,6 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
         print("]-----] Product : $product");
         yield ProductState.success(product: product);
-
-
 
       }
     } catch (error) {
