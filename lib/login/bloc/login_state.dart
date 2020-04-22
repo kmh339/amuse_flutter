@@ -1,5 +1,5 @@
 import 'package:amuse_flutter/model/models.dart';
-import 'package:amuse_flutter/model/user_meta.dart';
+import 'package:amuse_flutter/user/user_meta.dart';
 import 'package:meta/meta.dart';
 
 @immutable

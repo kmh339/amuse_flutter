@@ -161,10 +161,10 @@ class UserRepository {
     }
   }
 
-  Future<String> getUser() async {
+  Future<String> getUserName() async {
     final prefs = await SharedPreferences.getInstance();
-    String username = prefs.getString('usernameWith');
-    return username;
+    String userName = prefs.getString('usernameWith');
+    return userName;
   }
 
 

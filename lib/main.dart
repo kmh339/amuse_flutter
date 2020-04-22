@@ -2,7 +2,7 @@ import 'package:amuse_flutter/authentication/authentication_bloc.dart';
 import 'package:amuse_flutter/login/login.dart';
 import 'package:amuse_flutter/product/product_screen.dart';
 import 'package:amuse_flutter/splash_screen.dart';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/user/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amuse_flutter/authentication/bloc.dart';
@@ -11,13 +11,8 @@ import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final UserRepository userRepository = UserRepository();
   runApp(BlocProvider(
-    create: (context) => AuthenticationBloc(
-      userRepository: userRepository,
-      httpClient: http.Client(),
-    )..add(AppStarted()),
+    create: (context) => AuthenticationBloc()..add(AppStarted()),
     child: MyApp(),
     ),
   );
@@ -31,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final UserRepository _userRepository = UserRepository();
 
-    _userRepository.getUser().then((userName){
+    _userRepository.getUserName().then((userName){
       this.userName = userName;
     });
 
@@ -40,7 +35,7 @@ class MyApp extends StatelessWidget {
     });
 
     return MaterialApp(
-      title: 'Amusetravel',
+      title: 'AmuseTravel',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

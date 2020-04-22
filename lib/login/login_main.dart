@@ -1,7 +1,7 @@
 import 'package:amuse_flutter/product/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/user/user_repository.dart';
 
 import 'bloc/bloc.dart';
 
@@ -52,7 +52,7 @@ class _LoginMainState extends State<LoginMain> {
               _userRepository.persistToken(state.userMeta.token);
               userName = state.user.name;
               token = state.userMeta.token;
-              print("name : $userName, token : $token");
+              print("]-----] LoginMain when pushed loginbutton [-----[ name : $userName, token : $token");
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
                 return ProductScreen(userName: userName, token: token,);
               }));

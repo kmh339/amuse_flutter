@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:amuse_flutter/model/models.dart';
-import 'package:amuse_flutter/model/user_meta.dart';
+import 'package:amuse_flutter/user/user_meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/user/user_repository.dart';
 
 import 'bloc.dart';
 

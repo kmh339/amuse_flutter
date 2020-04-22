@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/user/user_repository.dart';
 import 'package:meta/meta.dart';
 
 import 'package:amuse_flutter/authentication/authentication_bloc.dart';
