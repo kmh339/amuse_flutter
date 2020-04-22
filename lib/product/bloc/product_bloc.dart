@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:amuse_flutter/user_repository.dart';
 import 'package:meta/meta.dart';
 
 import 'package:amuse_flutter/authentication/authentication_bloc.dart';
@@ -8,12 +9,8 @@ import 'package:amuse_flutter/model/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final AuthenticationBloc _authenticationBloc;
+  final _userRepository = UserRepository();
 
-  ProductBloc({
-    @required AuthenticationBloc authenticationBloc,
-}) : assert(authenticationBloc != null),
-  _authenticationBloc = authenticationBloc;
 
   @override
   ProductState get initialState => ProductState.empty();
@@ -42,7 +39,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       print("]-----] _mapProductLoadToState try [-----[");
 
-      final response = await _authenticationBloc.get('/api/products');
+      final response = await _userRepository.get('/api/products');
 
       if(response != null) {
         final contents = response['data'] as List;

@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserRepository _userRepository = UserRepository();
-    
+
     _userRepository.getUser().then((userName){
       this.userName = userName;
     });
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
           if(state is Unauthenticated) {
               return LoginScreen();
           }
-          else if(state is Authenticated){
+          if(state is Authenticated){
             return ProductScreen(userName: userName, token: token,);
           }
           return SplashScreen();

@@ -55,45 +55,6 @@ class AuthenticationBloc
   }
 
 
-  Map<String, dynamic> parseJwt(String token) {
-    String tokenBody = token.replaceAll("Bearer ", '');
-    final parts = tokenBody.split('.');
-    if (parts.length != 3) {
-      throw Exception('invalid token');
-    }
-
-    final payload = _decodeBase64(parts[1]);
-    final payloadMap = json.decode(payload);
-    if (payloadMap is! Map<String, dynamic>) {
-      throw Exception('invalid payload');
-    }
-
-    return payloadMap;
-  }
-
-  String _decodeBase64(String str) {
-    String output = str.replaceAll('-', '+').replaceAll('_', '/');
-
-    switch (output.length % 4) {
-      case 0:
-        break;
-      case 2:
-        output += '==';
-        break;
-      case 3:
-        output += '=';
-        break;
-      default:
-        throw Exception('Illegal base64url string!"');
-    }
-
-    return utf8.decode(base64Url.decode(output));
-  }
-
-  getAccessToken() {
-    return _userRepository.getAccessToken();
-  }
-
   Future<dynamic> get(String url) async {
     String accessToken = await _userRepository.getAccessToken();
 
@@ -122,93 +83,6 @@ class AuthenticationBloc
     }
   }
 
-  Future<dynamic> post(String url, String body) async {
-    String accessToken = await _userRepository.getAccessToken();
-
-    print("]----] accessToken[------[ $accessToken ");
-    print("]----] accessToken[------[ $body ");
-
-    if (accessToken != null) {
-      final response = await _httpClient.post(apiUrl + url,
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": accessToken
-          },
-          body: body);
-
-      print("]-----] AuthenticationBloc : response [-----[ ${response.statusCode}");
-
-      if (response.statusCode == 200 || response.statusCode == 500) {
-        return json.decode(utf8.decode(response.bodyBytes));
-      } else if (response.statusCode == 401) {
-        this.add(LoggedOut());
-      } else {
-        var result = json.decode(response.body);
-        throw Exception('Error : id');
-      }
-    } else {
-      this.add(LoggedOut());
-    }
-  }
-
-  Future<dynamic> put(String url, String body) async {
-    String accessToken = await _userRepository.getAccessToken();
-    if (accessToken != null) {
-      final response = await _httpClient.put(apiUrl + url,
-          headers: {
-            'Content-Type': 'application/json',
-            "Authorization": accessToken
-          },
-          body: body);
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else if (response.statusCode == 401) {
-        this.add(LoggedOut());
-      } else {
-        throw Exception('Error post api');
-      }
-    } else {
-      this.add(LoggedOut());
-    }
-  }
-
-  Future<dynamic> delete(String url) async {
-    String accessToken = await _userRepository.getAccessToken();
-    if (accessToken != null) {
-      final response = await _httpClient.delete(
-        apiUrl + url,
-        headers: {
-          'Content-Type': 'application/json',
-          "Authorization": accessToken
-        },
-      );
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else if (response.statusCode == 401) {
-        this.add(LoggedOut());
-      } else {
-        throw Exception('Error post api');
-      }
-    } else {
-      this.add(LoggedOut());
-    }
-  }
-
-  Future<dynamic> basicAuth(String url, String basicToken) async {
-    print(']-------] basicAuth basicToken [-------[ ${basicToken}');
-    final response = await _httpClient.get(apiUrl + url, headers: {
-      "Authorization": basicToken,
-      "Access-Control-Expose-Headers": "Authorization"
-    });
-    if (response.statusCode == 200) {
-      final data = response.headers;
-      await _userRepository.persistToken(data['authorization']);
-      return data['authorization'];
-    } else {
-      var result = json.decode(response.body);
-      throw Exception('Error : basicAuth');
-    }
-  }
 
   Future<dynamic> postWithoutAuth(String url, String body) async {
     print(']-------] postWithoutAuth : body [-------[ ${apiUrl + url}');

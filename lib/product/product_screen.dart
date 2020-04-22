@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amuse_flutter/authentication/bloc.dart';
+import 'package:amuse_flutter/login/bloc/bloc.dart';
 import 'package:amuse_flutter/product/bloc/bloc.dart';
 import 'package:amuse_flutter/product/product_main.dart';
 import 'package:amuse_flutter/user_repository.dart';
@@ -35,10 +36,8 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-        body: BlocProvider<ProductBloc>(
-          create: (context) => ProductBloc(
-            authenticationBloc: BlocProvider.of<AuthenticationBloc>(context),
-          ),
+        body: BlocProvider(
+          create: (context) => ProductBloc(),
           child: ProductMain(userName: _userName, token: _token,),
         )
       );

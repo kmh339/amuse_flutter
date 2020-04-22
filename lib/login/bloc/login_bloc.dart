@@ -6,18 +6,12 @@ import 'package:amuse_flutter/model/user_meta.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:amuse_flutter/authentication/bloc.dart';
 import 'package:amuse_flutter/user_repository.dart';
 
 import 'bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final AuthenticationBloc _authenticationBloc;
-
-  LoginBloc({
-    @required AuthenticationBloc authenticationBloc,
-  })  : assert(authenticationBloc != null),
-        _authenticationBloc = authenticationBloc;
+  final _userRepository = UserRepository();
 
   @override
   LoginState get initialState => LoginState.empty();
@@ -38,17 +32,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is InputDataCodeButtonPressed) {
-      yield* _mapInputDataCodeButtonPressedToState(event.email, event.password);
+      yield* _mapLoginButtonPressedToState(event.email, event.password);
     }
   }
 
-  Stream<LoginState> _mapInputDataCodeButtonPressedToState(
+  Stream<LoginState> _mapLoginButtonPressedToState(
       String email, String password) async* {
     try {
       String body = json.encode({"email": email, "password": password});
       print("$body");
       final response =
-          await _authenticationBloc.postWithoutAuth('/api/login', body);
+          await _userRepository.postWithoutAuth('/api/login', body);
 
       if (response['data'] != null && response['meta'] != null) {
        User user = User.fromJson(response['data']);
