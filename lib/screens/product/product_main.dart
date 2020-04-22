@@ -1,5 +1,5 @@
 import 'package:amuse_flutter/blocs/product_bloc/bloc.dart';
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

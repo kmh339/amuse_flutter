@@ -1,4 +1,4 @@
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:meta/meta.dart';
 
 @immutable
@@ -6,14 +6,14 @@ class LoginState {
   final bool isLoaded;
   final bool isLoading;
   final bool isCheckStatus;
-  final UserData user;
+  final UserData userData;
   final UserMeta userMeta;
 
   LoginState({
     @required this.isLoaded,
     @required this.isLoading,
     @required this.isCheckStatus,
-    @required this.user,
+    @required this.userData,
     @required this.userMeta,
   });
 
@@ -22,7 +22,7 @@ class LoginState {
       isLoaded: false,
       isLoading: false,
       isCheckStatus: false,
-      user: null,
+      userData: null,
       userMeta: null,
     );
   }
@@ -32,17 +32,17 @@ class LoginState {
       isLoaded: false,
       isLoading: false,
       isCheckStatus: false,
-      user: null,
+      userData: null,
       userMeta: null,
     );
   }
 
-  factory LoginState.success({UserData user, UserMeta userMeta}) {
+  factory LoginState.success({UserData userData, UserMeta userMeta}) {
     return LoginState(
       isLoaded: true,
       isLoading: false,
       isCheckStatus: true,
-      user: user,
+      userData: userData,
       userMeta: userMeta,
     );
   }

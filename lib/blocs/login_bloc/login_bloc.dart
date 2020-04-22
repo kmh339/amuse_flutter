@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -40,14 +40,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print("$body");
       final response =
           await _userRepository.postWithoutAuth('/api/login', body);
+//
+//      if (response['data'] != null && response['meta'] != null) {
+//       UserData userData = UserData.fromJson(response['data']);
+//       UserMeta userMeta = UserMeta.fromJson(response['meta']);
+//
+//        print("name : ${userData.name}");
+//        print("token: ${userMeta.token}");
 
-      if (response['data'] != null && response['meta'] != null) {
-       UserData user = UserData.fromJson(response['data']);
-       UserMeta userMeta = UserMeta.fromJson(response['meta']);
+      if(response != null) {
+        User user = User.fromJson(response);
+        UserData userData = user.data;
+        UserMeta userMeta = user.meta;
+        print("name : ${userData.name}");
 
-        print("name : ${user.name}");
-        print("token: ${userMeta.token}");
-        yield LoginState.success(user: user, userMeta: userMeta);
+        yield LoginState.success(userData: userData, userMeta: userMeta);
       }
     } catch (error) {
       yield LoginState.failure();

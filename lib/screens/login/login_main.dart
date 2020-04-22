@@ -1,7 +1,7 @@
 import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 
 import 'package:amuse_flutter/blocs/login_bloc/bloc.dart';
 
@@ -48,9 +48,9 @@ class _LoginMainState extends State<LoginMain> {
         setState(() {
           if (state.isLoaded ) {
             if (state.isCheckStatus) {
-              _userRepository.persistUsername(state.user.name);
+              _userRepository.persistUsername(state.userData.name);
               _userRepository.persistToken(state.userMeta.token);
-              userName = state.user.name;
+              userName = state.userData.name;
               token = state.userMeta.token;
               print("]-----] LoginMain when pushed loginbutton [-----[ name : $userName, token : $token");
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {

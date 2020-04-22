@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:amuse_flutter/blocs/product_bloc/bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
