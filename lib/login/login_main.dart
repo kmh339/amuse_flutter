@@ -5,16 +5,16 @@ import 'package:amuse_flutter/user_repository.dart';
 
 import 'bloc/bloc.dart';
 
-class CertificationMain extends StatefulWidget {
-  CertificationMain({
+class LoginMain extends StatefulWidget {
+  LoginMain({
     Key key,
   }) : super(key: key);
 
-  State<CertificationMain> createState() => _CertificationMainState();
+  State<LoginMain> createState() => _LoginMainState();
 }
 
-class _CertificationMainState extends State<CertificationMain> {
-  CertificationBloc _certificationBloc;
+class _LoginMainState extends State<LoginMain> {
+  LoginBloc _loginBloc;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -26,12 +26,12 @@ class _CertificationMainState extends State<CertificationMain> {
   @override
   void initState() {
     super.initState();
-    _certificationBloc = BlocProvider.of<CertificationBloc>(context);
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   _onInputCodeButtonPressed() {
 
-    BlocProvider.of<CertificationBloc>(context).add(
+    BlocProvider.of<LoginBloc>(context).add(
       InputDataCodeButtonPressed(
         email: _emailController.text,
         password: _passwordController.text,
@@ -43,7 +43,7 @@ class _CertificationMainState extends State<CertificationMain> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CertificationBloc, CertificationState>(
+    return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         setState(() {
           if (state.isLoaded ) {
@@ -69,7 +69,7 @@ class _CertificationMainState extends State<CertificationMain> {
           }
         });
       },
-      child: BlocBuilder<CertificationBloc, CertificationState>(
+      child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Form(
             key: _formKey,

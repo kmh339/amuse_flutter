@@ -1,5 +1,5 @@
 import 'package:amuse_flutter/authentication/authentication_bloc.dart';
-import 'package:amuse_flutter/certification/certification.dart';
+import 'package:amuse_flutter/login/login.dart';
 import 'package:amuse_flutter/product/product_screen.dart';
 import 'package:amuse_flutter/splash_screen.dart';
 import 'package:amuse_flutter/user_repository.dart';
@@ -24,17 +24,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  bool _signIn;
   String userName;
   String token;
 
   @override
   Widget build(BuildContext context) {
     final UserRepository _userRepository = UserRepository();
-    _userRepository.isSignedIn().then((signIn) {
-      this._signIn = signIn;
-    });
-
+    
     _userRepository.getUser().then((userName){
       this.userName = userName;
     });
@@ -51,7 +47,7 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if(state is Unauthenticated) {
-              return CertificationScreen();
+              return LoginScreen();
           }
           else if(state is Authenticated){
             return ProductScreen(userName: userName, token: token,);

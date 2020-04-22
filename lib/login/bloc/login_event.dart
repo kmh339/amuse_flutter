@@ -1,18 +1,18 @@
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
-abstract class CertificationEvent extends Equatable {
-  const CertificationEvent();
+abstract class LoginEvent extends Equatable {
+  const LoginEvent();
 
   @override
   List<Object> get props => [];
 }
-class CertificationLoad extends CertificationEvent {
+class CertificationLoad extends LoginEvent {
   @override
   String toString() => 'CertificationLoad';
 }
 
-class InputDataCodeButtonPressed extends CertificationEvent {
+class InputDataCodeButtonPressed extends LoginEvent {
   final String email;
   final String password;
 
@@ -27,7 +27,7 @@ class InputDataCodeButtonPressed extends CertificationEvent {
       'InputDataButtonPressed { email: $email, password: $password }';
 }
 
-class InputDataLoading extends CertificationEvent{
+class InputDataLoading extends LoginEvent{
 
 }
 

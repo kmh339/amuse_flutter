@@ -11,21 +11,21 @@ import 'package:amuse_flutter/user_repository.dart';
 
 import 'bloc.dart';
 
-class CertificationBloc extends Bloc<CertificationEvent, CertificationState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationBloc _authenticationBloc;
 
-  CertificationBloc({
+  LoginBloc({
     @required AuthenticationBloc authenticationBloc,
   })  : assert(authenticationBloc != null),
         _authenticationBloc = authenticationBloc;
 
   @override
-  CertificationState get initialState => CertificationState.empty();
+  LoginState get initialState => LoginState.empty();
 
   @override
-  Stream<CertificationState> transformEvents(
-    Stream<CertificationEvent> events,
-    Stream<CertificationState> Function(CertificationEvent event) next,
+  Stream<LoginState> transformEvents(
+    Stream<LoginEvent> events,
+    Stream<LoginState> Function(LoginEvent event) next,
   ) {
     return super.transformEvents(
       events.debounceTime(
@@ -36,13 +36,13 @@ class CertificationBloc extends Bloc<CertificationEvent, CertificationState> {
   }
 
   @override
-  Stream<CertificationState> mapEventToState(CertificationEvent event) async* {
+  Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is InputDataCodeButtonPressed) {
       yield* _mapInputDataCodeButtonPressedToState(event.email, event.password);
     }
   }
 
-  Stream<CertificationState> _mapInputDataCodeButtonPressedToState(
+  Stream<LoginState> _mapInputDataCodeButtonPressedToState(
       String email, String password) async* {
     try {
       String body = json.encode({"email": email, "password": password});
@@ -56,10 +56,10 @@ class CertificationBloc extends Bloc<CertificationEvent, CertificationState> {
 
         print("name : ${user.name}");
         print("token: ${userMeta.token}");
-        yield CertificationState.success(user: user, userMeta: userMeta);
+        yield LoginState.success(user: user, userMeta: userMeta);
       }
     } catch (error) {
-      yield CertificationState.failure();
+      yield LoginState.failure();
     }
   }
 }

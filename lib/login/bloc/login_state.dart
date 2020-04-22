@@ -3,14 +3,14 @@ import 'package:amuse_flutter/model/user_meta.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-class CertificationState {
+class LoginState {
   final bool isLoaded;
   final bool isLoading;
   final bool isCheckStatus;
   final User user;
   final UserMeta userMeta;
 
-  CertificationState({
+  LoginState({
     @required this.isLoaded,
     @required this.isLoading,
     @required this.isCheckStatus,
@@ -18,8 +18,8 @@ class CertificationState {
     @required this.userMeta,
   });
 
-  factory CertificationState.empty() {
-    return CertificationState(
+  factory LoginState.empty() {
+    return LoginState(
       isLoaded: false,
       isLoading: false,
       isCheckStatus: false,
@@ -28,8 +28,8 @@ class CertificationState {
     );
   }
 
-  factory CertificationState.failure() {
-    return CertificationState(
+  factory LoginState.failure() {
+    return LoginState(
       isLoaded: false,
       isLoading: false,
       isCheckStatus: false,
@@ -38,8 +38,8 @@ class CertificationState {
     );
   }
 
-  factory CertificationState.success({User user, UserMeta userMeta}) {
-    return CertificationState(
+  factory LoginState.success({User user, UserMeta userMeta}) {
+    return LoginState(
       isLoaded: true,
       isLoading: false,
       isCheckStatus: true,
