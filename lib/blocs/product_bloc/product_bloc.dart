@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'package:amuse_flutter/user/user_repository.dart';
-import 'package:meta/meta.dart';
-
-import 'package:amuse_flutter/authentication/authentication_bloc.dart';
-import 'package:amuse_flutter/product/bloc/bloc.dart';
-import 'package:bloc/bloc.dart';
 import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/blocs/product_bloc/bloc.dart';
+import 'package:bloc/bloc.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {

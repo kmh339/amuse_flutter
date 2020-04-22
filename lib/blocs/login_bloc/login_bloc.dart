@@ -2,11 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:amuse_flutter/model/models.dart';
-import 'package:amuse_flutter/user/user_meta.dart';
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:amuse_flutter/user/user_repository.dart';
 
 import 'bloc.dart';
 
@@ -45,7 +42,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           await _userRepository.postWithoutAuth('/api/login', body);
 
       if (response['data'] != null && response['meta'] != null) {
-       User user = User.fromJson(response['data']);
+       UserData user = UserData.fromJson(response['data']);
        UserMeta userMeta = UserMeta.fromJson(response['meta']);
 
         print("name : ${user.name}");

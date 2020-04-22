@@ -1,8 +1,8 @@
-import 'package:amuse_flutter/user/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:amuse_flutter/blocs/login_bloc/bloc.dart';
+
 import 'login.dart';
-import 'bloc/bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({

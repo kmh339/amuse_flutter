@@ -1,13 +1,11 @@
 import 'package:amuse_flutter/authentication/authentication_bloc.dart';
-import 'package:amuse_flutter/login/login.dart';
-import 'package:amuse_flutter/product/product_screen.dart';
+import 'package:amuse_flutter/screens/login/login.dart';
+import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:amuse_flutter/splash_screen.dart';
-import 'package:amuse_flutter/user/user_repository.dart';
+import 'package:amuse_flutter/model/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amuse_flutter/authentication/bloc.dart';
-
-import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,9 +1,9 @@
-import 'package:amuse_flutter/product/product_screen.dart';
+import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/user/user_repository.dart';
+import 'package:amuse_flutter/model/models.dart';
 
-import 'bloc/bloc.dart';
+import 'package:amuse_flutter/blocs/login_bloc/bloc.dart';
 
 class LoginMain extends StatefulWidget {
   LoginMain({

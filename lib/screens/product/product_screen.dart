@@ -1,6 +1,5 @@
-import 'package:amuse_flutter/product/bloc/bloc.dart';
-import 'package:amuse_flutter/product/product_main.dart';
-import 'package:amuse_flutter/user/user_repository.dart';
+import 'package:amuse_flutter/blocs/product_bloc/bloc.dart';
+import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +17,7 @@ class ProductScreen extends StatelessWidget {
         assert(token != null),
         _token = token,
         super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
