@@ -132,6 +132,12 @@ class UserRepository {
     return;
   }
 
+  Future<String> getUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+    String userName = prefs.getString('usernameWith');
+    return userName;
+  }
+
 
   Future<void> persistEmail(String email) async {
     final prefs = await SharedPreferences.getInstance();
@@ -143,6 +149,18 @@ class UserRepository {
     final prefs = await SharedPreferences.getInstance();
     String email = prefs.getString('emailWith');
     return email;
+  }
+
+  Future<void> persistAvatar(String avatar) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('avatarWith', avatar);
+    return;
+  }
+
+  Future<String> getAvatar() async {
+    final prefs = await SharedPreferences.getInstance();
+    String avatar = prefs.getString('avatarWith');
+    return avatar;
   }
 
   Future<void> signOut() async {
@@ -159,12 +177,6 @@ class UserRepository {
     } else {
       return false;
     }
-  }
-
-  Future<String> getUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    String userName = prefs.getString('usernameWith');
-    return userName;
   }
 
 

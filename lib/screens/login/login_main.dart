@@ -14,23 +14,21 @@ class LoginMain extends StatefulWidget {
 }
 
 class _LoginMainState extends State<LoginMain> {
-  LoginBloc _loginBloc;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   String userName;
   String token;
+  String avatar;
 
   UserRepository _userRepository = UserRepository();
 
   @override
   void initState() {
     super.initState();
-    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   _onInputCodeButtonPressed() {
-
     BlocProvider.of<LoginBloc>(context).add(
       InputDataCodeButtonPressed(
         email: _emailController.text,
@@ -50,11 +48,13 @@ class _LoginMainState extends State<LoginMain> {
             if (state.isCheckStatus) {
               _userRepository.persistUsername(state.userData.name);
               _userRepository.persistToken(state.userMeta.token);
+              _userRepository.persistAvatar(state.userData.avatar);
               userName = state.userData.name;
               token = state.userMeta.token;
+              avatar = state.userData.avatar;
               print("]-----] LoginMain when pushed loginbutton [-----[ name : $userName, token : $token");
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-                return ProductScreen(userName: userName, token: token,);
+                return ProductScreen(userName: userName, token: token, avatar: avatar,);
               }));
             }
           }

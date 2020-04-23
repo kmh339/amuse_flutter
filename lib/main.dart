@@ -19,6 +19,8 @@ void main() {
 class MyApp extends StatelessWidget {
   String userName;
   String token;
+  String avatar;
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,10 @@ class MyApp extends StatelessWidget {
       this.token = token;
     });
 
+    _userRepository.getAvatar().then((avatar){
+      this.avatar = avatar;
+    });
+
     return MaterialApp(
       title: 'AmuseTravel',
       theme: ThemeData(
@@ -43,7 +49,7 @@ class MyApp extends StatelessWidget {
               return LoginScreen();
           }
           if(state is Authenticated){
-            return ProductScreen(userName: userName, token: token,);
+            return ProductScreen(userName: userName, token: token, avatar: avatar,);
           }
           return SplashScreen();
         },
