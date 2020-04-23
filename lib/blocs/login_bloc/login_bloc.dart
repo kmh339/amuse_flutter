@@ -33,14 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     }
   }
 
-  Stream<LoginState> _mapLoginWithEmailToState(
-      String email, String password) async* {
+  Stream<LoginState> _mapLoginWithEmailToState(String email, String password) async* {
     try {
       String body = json.encode({"email": email, "password": password});
       print("$body");
-      final response =
-          await _userRepository.postWithoutAuth('/api/login', body);
-//
+      final response = await _userRepository.postWithoutAuth('/api/login', body);
+
 //      if (response['data'] != null && response['meta'] != null) {
 //       UserData userData = UserData.fromJson(response['data']);
 //       UserMeta userMeta = UserMeta.fromJson(response['meta']);

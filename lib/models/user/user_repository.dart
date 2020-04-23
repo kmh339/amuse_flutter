@@ -98,7 +98,6 @@ class UserRepository {
   }
 
   Future<void> persistToken(String token) async {
-    /// write to keystore/keychain
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('accessTokenWith', token);
     return;
@@ -119,12 +118,6 @@ class UserRepository {
     final prefs = await SharedPreferences.getInstance();
     String accessToken = prefs.getString('accessTokenWith');
     return accessToken;
-  }
-
-  Future<String> getAuthenticate() async {
-    final prefs = await SharedPreferences.getInstance();
-    String username = prefs.getString('usernameWith');
-    return username;
   }
 
   Future<void> persistUsername(String username) async {

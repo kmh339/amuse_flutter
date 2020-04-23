@@ -48,7 +48,6 @@ class _LoginMainState extends State<LoginMain> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        setState(() {
           if (state.isSuccess ) {
               _userRepository.persistUsername(state.userData.name);
               _userRepository.persistToken(state.userMeta.token);
@@ -70,7 +69,6 @@ class _LoginMainState extends State<LoginMain> {
               ),
             );
           }
-        });
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
