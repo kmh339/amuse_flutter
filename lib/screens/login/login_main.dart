@@ -10,26 +10,33 @@ class LoginMain extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
+  @override
   State<LoginMain> createState() => _LoginMainState();
 }
 
 class _LoginMainState extends State<LoginMain> {
+  final UserRepository _userRepository = UserRepository();
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+
+  LoginBloc _loginBloc;
 
   String userName;
   String token;
   String avatar;
 
-  UserRepository _userRepository = UserRepository();
 
   @override
   void initState() {
     super.initState();
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   _onInputCodeButtonPressed() {
-    BlocProvider.of<LoginBloc>(context).add(
+    _loginBloc.add(
       InputDataCodeButtonPressed(
         email: _emailController.text,
         password: _passwordController.text,
@@ -37,7 +44,6 @@ class _LoginMainState extends State<LoginMain> {
     );
   }
 
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +150,12 @@ class _LoginMainState extends State<LoginMain> {
   }
 
   @override
-  void dispose() {
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
+
   }
+
+
 }

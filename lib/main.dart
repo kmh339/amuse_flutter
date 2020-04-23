@@ -16,16 +16,22 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final UserRepository _userRepository = UserRepository();
+
   String userName;
+
   String token;
+
   String avatar;
 
-
   @override
-  Widget build(BuildContext context) {
-    final UserRepository _userRepository = UserRepository();
-
+  void initState() {
     _userRepository.getUserName().then((userName){
       this.userName = userName;
     });
@@ -37,7 +43,11 @@ class MyApp extends StatelessWidget {
     _userRepository.getAvatar().then((avatar){
       this.avatar = avatar;
     });
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AmuseTravel',
       theme: ThemeData(
