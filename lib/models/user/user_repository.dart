@@ -78,6 +78,7 @@ class UserRepository {
       await persistToken(jsonBody['accessToken']);
       return jsonBody;
     } else {
+      print("error in postWithOutAuth");
       throw Exception('Error postWithoutAuth');
     }
   }

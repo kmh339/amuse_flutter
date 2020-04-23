@@ -44,14 +44,12 @@ class _LoginMainState extends State<LoginMain> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         setState(() {
-          if (state.isLoaded ) {
-            if (state.isCheckStatus) {
+          if (state.isSuccess ) {
               _userRepository.persistUsername(state.userData.name);
               _userRepository.persistToken(state.userMeta.token);
               _userRepository.persistAvatar(state.userData.avatar);
@@ -62,7 +60,6 @@ class _LoginMainState extends State<LoginMain> {
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
                 return ProductScreen(userName: userName, token: token, avatar: avatar,);
               }));
-            }
           }
           else{
             Scaffold.of(context).showSnackBar(
@@ -89,7 +86,6 @@ class _LoginMainState extends State<LoginMain> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-
                           TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(

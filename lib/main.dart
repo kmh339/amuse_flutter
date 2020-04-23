@@ -1,11 +1,10 @@
-import 'package:amuse_flutter/authentication/authentication_bloc.dart';
+import 'package:amuse_flutter/blocs/authentication_bloc/bloc.dart';
 import 'package:amuse_flutter/screens/login/login.dart';
 import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:amuse_flutter/splash_screen.dart';
 import 'package:amuse_flutter/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/authentication/bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,7 +50,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'AmuseTravel',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {

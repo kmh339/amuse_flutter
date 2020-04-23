@@ -29,11 +29,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is InputDataCodeButtonPressed) {
-      yield* _mapLoginButtonPressedToState(event.email, event.password);
+      yield* _mapLoginWithEmailToState(event.email, event.password);
     }
   }
 
-  Stream<LoginState> _mapLoginButtonPressedToState(
+  Stream<LoginState> _mapLoginWithEmailToState(
       String email, String password) async* {
     try {
       String body = json.encode({"email": email, "password": password});
