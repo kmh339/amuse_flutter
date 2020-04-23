@@ -1,5 +1,5 @@
-import 'package:amuse_flutter/model/models.dart';
-import 'package:amuse_flutter/product/bloc/bloc.dart';
+import 'package:amuse_flutter/blocs/product_bloc/bloc.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,15 +7,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ProductMain extends StatefulWidget {
   final String _userName;
   final String _token;
+  final String _avatar;
 
   ProductMain({
     Key key,
     @required String userName,
     @required String token,
+    @required String avatar,
   })  : assert(userName != null),
         _userName = userName,
         assert(token != null),
         _token = token,
+        assert(avatar != null),
+        _avatar = avatar,
         super(key: key);
 
   @override
@@ -26,6 +30,8 @@ class _ProductMainState extends State<ProductMain> {
   String get _userName => widget._userName;
 
   String get _token => widget._token;
+
+  String get _avatar => widget._avatar;
 
   ProductBloc _productBloc;
   List<Product> _product;
@@ -58,15 +64,28 @@ class _ProductMainState extends State<ProductMain> {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "사용자 이름 : ${_userName}",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                    Card(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Image.network(
+                            _avatar,
+                            width: 100,
+                          ),
+                          Text(
+                            "사용자 이름 : ${_userName}",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     Text("토큰 : ${_token}"),
-                    Padding(padding: EdgeInsets.only(bottom: 10),),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                    ),
                     Expanded(
                       child: ListView.builder(
                           scrollDirection: Axis.vertical,

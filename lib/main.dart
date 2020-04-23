@@ -1,41 +1,37 @@
-import 'package:amuse_flutter/authentication/authentication_bloc.dart';
-import 'package:amuse_flutter/certification/certification.dart';
-import 'package:amuse_flutter/product/product_screen.dart';
+import 'package:amuse_flutter/blocs/authentication_bloc/bloc.dart';
+import 'package:amuse_flutter/screens/login/login.dart';
+import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:amuse_flutter/splash_screen.dart';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/authentication/bloc.dart';
-
-import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final UserRepository userRepository = UserRepository();
   runApp(BlocProvider(
-    create: (context) => AuthenticationBloc(
-      userRepository: userRepository,
-      httpClient: http.Client(),
-    )..add(AppStarted()),
+    create: (context) => AuthenticationBloc()..add(AppStarted()),
     child: MyApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  bool _signIn;
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final UserRepository _userRepository = UserRepository();
+
   String userName;
+
   String token;
 
-  @override
-  Widget build(BuildContext context) {
-    final UserRepository _userRepository = UserRepository();
-    _userRepository.isSignedIn().then((signIn) {
-      this._signIn = signIn;
-    });
+  String avatar;
 
-    _userRepository.getUser().then((userName){
+  @override
+  void initState() {
+    _userRepository.getUserName().then((userName){
       this.userName = userName;
     });
 
@@ -43,18 +39,26 @@ class MyApp extends StatelessWidget {
       this.token = token;
     });
 
+    _userRepository.getAvatar().then((avatar){
+      this.avatar = avatar;
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Amusetravel',
+      title: 'AmuseTravel',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if(state is Unauthenticated) {
-              return CertificationScreen();
+              return LoginScreen();
           }
-          else if(state is Authenticated){
-            return ProductScreen(userName: userName, token: token,);
+          if(state is Authenticated){
+            return ProductScreen(userName: userName, token: token, avatar: avatar,);
           }
           return SplashScreen();
         },

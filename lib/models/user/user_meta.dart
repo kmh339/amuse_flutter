@@ -8,8 +8,6 @@ class UserMeta extends Equatable {
   final String token;
   final String tokenType;
 
-
-
   const UserMeta({
     this.token,
     this.tokenType,

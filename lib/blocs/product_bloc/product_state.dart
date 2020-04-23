@@ -1,5 +1,5 @@
 import 'package:meta/meta.dart';
-import 'package:amuse_flutter/model/models.dart';
+import 'package:amuse_flutter/models/models.dart';
 
 @immutable
 class ProductState {

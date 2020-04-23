@@ -1,37 +1,42 @@
-import 'package:amuse_flutter/product/product_screen.dart';
+import 'package:amuse_flutter/screens/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amuse_flutter/user_repository.dart';
+import 'package:amuse_flutter/models/models.dart';
 
-import 'bloc/bloc.dart';
+import 'package:amuse_flutter/blocs/login_bloc/bloc.dart';
 
-class CertificationMain extends StatefulWidget {
-  CertificationMain({
+class LoginMain extends StatefulWidget {
+  LoginMain({
     Key key,
   }) : super(key: key);
 
-  State<CertificationMain> createState() => _CertificationMainState();
+  @override
+  State<LoginMain> createState() => _LoginMainState();
 }
 
-class _CertificationMainState extends State<CertificationMain> {
-  CertificationBloc _certificationBloc;
+class _LoginMainState extends State<LoginMain> {
+  final UserRepository _userRepository = UserRepository();
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
+  LoginBloc _loginBloc;
+
   String userName;
   String token;
+  String avatar;
 
-  UserRepository _userRepository = UserRepository();
 
   @override
   void initState() {
     super.initState();
-    _certificationBloc = BlocProvider.of<CertificationBloc>(context);
+    _loginBloc = BlocProvider.of<LoginBloc>(context);
   }
 
   _onInputCodeButtonPressed() {
-
-    BlocProvider.of<CertificationBloc>(context).add(
+    _loginBloc.add(
       InputDataCodeButtonPressed(
         email: _emailController.text,
         password: _passwordController.text,
@@ -39,24 +44,21 @@ class _CertificationMainState extends State<CertificationMain> {
     );
   }
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CertificationBloc, CertificationState>(
+    return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        setState(() {
-          if (state.isLoaded ) {
-            if (state.isCheckStatus) {
-              _userRepository.persistUsername(state.user.name);
+          if (state.isSuccess ) {
+              _userRepository.persistUsername(state.userData.name);
               _userRepository.persistToken(state.userMeta.token);
-              userName = state.user.name;
+              _userRepository.persistAvatar(state.userData.avatar);
+              userName = state.userData.name;
               token = state.userMeta.token;
-              print("name : $userName, token : $token");
+              avatar = state.userData.avatar;
+              print("]-----] LoginMain when pushed loginbutton [-----[ name : $userName, token : $token");
               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
-                return ProductScreen(userName: userName, token: token,);
+                return ProductScreen(userName: userName, token: token, avatar: avatar,);
               }));
-            }
           }
           else{
             Scaffold.of(context).showSnackBar(
@@ -67,9 +69,8 @@ class _CertificationMainState extends State<CertificationMain> {
               ),
             );
           }
-        });
       },
-      child: BlocBuilder<CertificationBloc, CertificationState>(
+      child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
           return Form(
             key: _formKey,
@@ -83,7 +84,6 @@ class _CertificationMainState extends State<CertificationMain> {
                     children: <Widget>[
                       Column(
                         children: <Widget>[
-
                           TextFormField(
                             controller: _emailController,
                             decoration: InputDecoration(
@@ -144,7 +144,12 @@ class _CertificationMainState extends State<CertificationMain> {
   }
 
   @override
-  void dispose() {
+  void dispose(){
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
+
   }
+
+
 }
